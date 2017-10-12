@@ -1,6 +1,6 @@
 {
   "name": "sensoring_project",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "A JMSS sensoring project designed to measure atmospheric information.",
   "scripts": {
     "build": "webpack --display-error-details",
