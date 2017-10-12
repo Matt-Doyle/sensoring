@@ -1,7 +1,7 @@
 {
-  "name": "winter-shape",
+  "name": "sensoring_project",
   "version": "1.0.0",
-  "description": "My app description",
+  "description": "",
   "scripts": {
     "build": "webpack --display-error-details",
     "postinstall": "npm run build",
