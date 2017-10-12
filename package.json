@@ -4,7 +4,8 @@
   "description": "A JMSS sensoring project designed to measure atmospheric information.",
   "scripts": {
     "build": "webpack --display-error-details",
-    "postinstall": "npm run build",
+    "production-build": "node --max_old_space_size=1024 node_modules/webpack/bin/webpack.js",
+    "postinstall": "",
     "start": "node server.js"
   },
   "dependencies": {
