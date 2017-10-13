@@ -4,37 +4,29 @@ pipeline {
 
     agent any
 
-    currentBuild.result = "SUCCESS"
+    stages {
+        stage('Checkout') {
+            checkout scm
+        }
 
-    try {
-        stages {
-            stage('Checkout') {
-                checkout scm
-            }
-
-            stage('Build') {
-                steps {
-                    echo 'Building...'
-                    sh 'git reset --hard'
-                    sh 'git clean -df'
-                    sh 'npm install'
-                    sh 'npm run "production-build"'
-                }
-            }
-            stage('Test') {
-                steps {
-                    echo 'Testing...'
-                }
-            }
-            stage('Deploy') {
-                steps {
-                    echo 'Deploying...'
-                }
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                sh 'git reset --hard'
+                sh 'git clean -df'
+                sh 'npm install'
+                sh 'npm run "production-build"'
             }
         }
-    }
-    catch(err) {
-        currentBuild.result = "FAILURE"
-        throw err
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+            }
+        }
     }
 }
