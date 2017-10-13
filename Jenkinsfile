@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-node('npm && webpack') {
+pipeline {
 
     agent any
 
