@@ -1,15 +1,10 @@
 #!/usr/bin/env groovy
 
-pipeline {
+node('npm && webpack') {
 
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Build') {
             steps {
                 echo 'Building...'
