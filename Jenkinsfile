@@ -2,7 +2,7 @@
 
 properties([
     parameters([
-        string(defaultValue: '/home/sensoring_deploy/sensoring', description: 'Where should we deploy the build to?', name: 'DEPLOY_DIR'),
+        string(defaultValue: '/deploy/sensoring', description: 'Where should we deploy the build to?', name: 'DEPLOY_DIR'),
         string(defaultValue: 'https://github.com/Matt-Doyle/sensoring', description: 'What is the github repository we are using?', name: 'GITHUB_REPO')
     ])
 ])
@@ -24,7 +24,6 @@ node() {
     }
     stage('Deploy') {
         echo 'Deploying...'
-        sh "mkdir ${params.DEPLOY_DIR}"
         sh "rm -r ${params.DEPLOY_DIR}"
         sh "cp -r . ${params.DEPLOY_DIR}"
     }
