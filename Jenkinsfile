@@ -8,29 +8,24 @@ properties([
 ])
 
 node() {
-    try() {
-        stage('Checkout') {
-            echo 'Checking out...'
-            checkout scm
-            sh 'git reset --hard'
-            sh 'git clean -df'
-        }
-        stage('Build') {
-            echo 'Building...'
-            sh 'npm install'
-            sh 'npm run "production-build"'
-        }
-        stage('Test') {
-            echo 'Testing...'
-        }
-        stage('Deploy') {
-            echo 'Deploying...'
-            mkdir "${params.DEPLOY_DIR}"
-            sh "rm -r ${params.DEPLOY_DIR}"
-            sh "cp -r . ${params.DEPLOY_DIR}"
-        }
+    stage('Checkout') {
+        echo 'Checking out...'
+        checkout scm
+        sh 'git reset --hard'
+        sh 'git clean -df'
     }
-    catch(err) {
-
+    stage('Build') {
+        echo 'Building...'
+        sh 'npm install'
+        sh 'npm run "production-build"'
+    }
+    stage('Test') {
+        echo 'Testing...'
+    }
+    stage('Deploy') {
+        echo 'Deploying...'
+        mkdir "${params.DEPLOY_DIR}"
+        sh "rm -r ${params.DEPLOY_DIR}"
+        sh "cp -r . ${params.DEPLOY_DIR}"
     }
 }
