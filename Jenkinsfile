@@ -24,7 +24,6 @@ node() {
     }
     stage('Deploy') {
         echo 'Deploying...'
-        sh "rm -r ${params.DEPLOY_DIR}/*"
         sh "cp -r . ${params.DEPLOY_DIR}"
     }
 }
