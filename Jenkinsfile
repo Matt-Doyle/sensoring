@@ -25,6 +25,6 @@ node() {
     stage('Deploy') {
         echo 'Deploying...'
         sh "rm -rf ${params.DEPLOY_DIR}/*"
-        sh "cp -r . ${params.DEPLOY_DIR}"
+        sh "yes | cp -rf . ${params.DEPLOY_DIR}"
     }
 }
