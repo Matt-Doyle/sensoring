@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { forgotPassword } from '../../actions/auth';
-import Messages from '../Messages';
+import Messages from '../Pages/Messages';
 
 class Forgot extends React.Component {
   constructor(props) {

@@ -1,9 +1,10 @@
 import React from 'react';
 import { IndexRoute, Route } from 'react-router';
-import App from './components/App';
-import Home from './components/Home';
-import Contact from './components/Contact';
-import NotFound from './components/NotFound';
+import App from './components/Pages/App';
+import Home from './components/Pages/Home';
+import Maps from './components/Pages/Maps';
+import Contact from './components/Pages/Contact';
+import NotFound from './components/Pages/NotFound';
 import Login from './components/Account/Login';
 import Signup from './components/Account/Signup';
 import Profile from './components/Account/Profile';
@@ -29,6 +30,7 @@ export default function getRoutes(store) {
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Home} onLeave={clearMessages}/>
+      <Route path="/maps" component={Maps} onLeave={clearMessages}/>
       <Route path="/contact" component={Contact} onLeave={clearMessages}/>
       <Route path="/login" component={Login} onEnter={skipIfAuthenticated} onLeave={clearMessages}/>
       <Route path="/signup" component={Signup} onEnter={skipIfAuthenticated} onLeave={clearMessages}/>

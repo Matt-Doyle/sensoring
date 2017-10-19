@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { updateProfile, changePassword, deleteAccount } from '../../actions/auth';
 import { link, unlink } from '../../actions/oauth';
-import Messages from '../Messages';
+import Messages from '../Pages/Messages';
 
 class Profile extends React.Component {
   constructor(props) {
