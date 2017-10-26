@@ -11,34 +11,29 @@ class MapComponent extends React.Component {
             case 2:
                 console.log(level);
                 floorMap = (
-                    <div className='mapFloor'>
-                        <div className='mapFloorThird'>
-                        <div className='mapRoom'> <h2> {level}B1 </h2></div>
-                        <div className='mapRoom mapLab'> <h2> {level}L1 &amp; 2 </h2> </div>
-                        <div className='mapRoom'> <h2> {level}L3 </h2></div>
-                        <div className='mapRoom mapLab'><h2> {level}L4 &amp; 5 </h2> </div>
-                        <div className='mapRoom'> <h2> {level}B4 </h2> </div>
+                    <div className="mapLayout">
+                        <div className="mapUpper">
+                            <div>1L1 &amp; 2</div>
+                            <div>1B1 &amp; 2</div>
+                            <div>1L3</div>
+                            <div>1L2 &amp; 4</div>
+                            <div>1B8 &amp; 9</div>
                         </div>
-                        <div className='mapFloorThird mapSmallThird'>
-                        <div className='mapRoom'> </div>
-                        <div className='mapVoid'> </div>
-                        <div className='mapRoom mapTinyroom'> </div>
-                        <div className='mapVoid'> </div>
-                        <div className='mapRoom'> </div>
+
+                        <div className="mapCenter">
+                            <div>Stair Area</div>
+                            <div>THE VOID</div>
+                            <div>Stair Area</div>
                         </div>
-                        <div className='mapFloorThird'>
-                        <div className='mapRoomthird'>
-                            <div className='mapRoom mapTut'> <h4> {level}T1 </h4> </div>
-                            <div className='mapRoom mapTut'> <h4> {level}T2 </h4> </div>
+
+                        <div className="mapLower">
+                            <div>1B1 &amp; 2</div>
+                            <div>1L1 &amp; 2</div>
+                            <div>1L3</div>
+                            <div>1L2 &amp; 4</div>
+                            <div>1B8 &amp; 9</div>
                         </div>
-                        <div className='mapRoom'> </div>
-                        <div className='mapRoom centerbridge'> </div>
-                        <div className='mapRoom'> </div>
-                        <div className='mapRoomthird'>
-                            <div className='mapRoom mapTut'> <h4> {level}T3 </h4>  </div>
-                            <div className='mapRoom mapTut'> <h4> {level}T4 </h4>  </div>
-                        </div>
-                        </div>
+
                     </div>
                 );
                 break;

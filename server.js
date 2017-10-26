@@ -17,6 +17,11 @@ var less = require('less-middleware');
 var webpack = require('webpack');
 var config = require('./webpack.config');
 
+// Apparently the progress will not automatically terminate on SIGINT
+process.on('SIGINT', function() {
+  process.exit();
+});
+
 // Load environment variables from .env file
 dotenv.load();
 
