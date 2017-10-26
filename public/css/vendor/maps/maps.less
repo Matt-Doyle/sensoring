@@ -1,11 +1,27 @@
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
+@map-body: #fff;
+@map-border: #e0e0e0;
+
 .mapLayout {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 2fr 1fr 2fr;
   grid-gap: 1em;
+}
+
+.mapLayout div div {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+  text-align: center;
+  background-color: @map-body;
+  border: 1px solid @map-border;
+} 
+
+.mapLayout div .mapEmptyArea {
+  visibility: hidden;
 }
 
 .mapUpper {
@@ -29,5 +45,6 @@
   grid-template-columns: 1fr 2fr 1fr 2fr 1fr;
 }
 
-.mapLayout > div {
+.row-eq-height {
+  display: flex;
 }
