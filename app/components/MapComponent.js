@@ -12,21 +12,21 @@ class MapComponent extends React.Component {
                 console.log(level);
                 floorMap = (
                     <div className='mapFloor'>
-                        <div className='mapFloorthird'>
+                        <div className='mapFloorThird'>
                         <div className='mapRoom'> <h2> {level}B1 </h2></div>
                         <div className='mapRoom mapLab'> <h2> {level}L1 &amp; 2 </h2> </div>
                         <div className='mapRoom'> <h2> {level}L3 </h2></div>
                         <div className='mapRoom mapLab'><h2> {level}L4 &amp; 5 </h2> </div>
                         <div className='mapRoom'> <h2> {level}B4 </h2> </div>
                         </div>
-                        <div className='mapFloorthird mapSmallthird'>
+                        <div className='mapFloorThird mapSmallThird'>
                         <div className='mapRoom'> </div>
                         <div className='mapVoid'> </div>
                         <div className='mapRoom mapTinyroom'> </div>
                         <div className='mapVoid'> </div>
                         <div className='mapRoom'> </div>
                         </div>
-                        <div className='mapFloorthird'>
+                        <div className='mapFloorThird'>
                         <div className='mapRoomthird'>
                             <div className='mapRoom mapTut'> <h4> {level}T1 </h4> </div>
                             <div className='mapRoom mapTut'> <h4> {level}T2 </h4> </div>
