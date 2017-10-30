@@ -16,6 +16,7 @@ var request = require('request');
 var less = require('less-middleware');
 var webpack = require('webpack');
 var config = require('./webpack.config');
+var socket = require('socket.io');
 
 // Apparently the progress will not automatically terminate on SIGINT
 process.on('SIGINT', function() {
@@ -40,12 +41,20 @@ var contactController = require('./controllers/contact');
 var routes = require('./app/routes');
 var configureStore = require('./app/store/configureStore').default;
 
+// Sensoring things
+var networking = require("./sensoring_modules/networking.js");
+var sensorManager = require("./sensoring_modules/sensor_manager.js");
+
+// API
+var api = require("./api/api.js");
+
 var app = express();
 
 var compiler = webpack(config);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.set('port', process.env.PORT || 3000);
+app.set('sensor port', process.env.SENSOR_PORT || 3001);
 app.use(compression());
 app.use(less(path.join(__dirname, 'public')));
 app.use(logger('dev'));
@@ -97,6 +106,9 @@ app.get('/unlink/:provider', userController.ensureAuthenticated, userController.
 app.post('/auth/google', userController.authGoogle);
 app.get('/auth/google/callback', userController.authGoogleCallback);
 
+// API
+api.initAPI(app);
+
 // React server rendering
 app.use(function(req, res) {
   var initialState = {
@@ -133,8 +145,39 @@ if (app.get('env') === 'production') {
   });
 }
 
-app.listen(app.get('port'), function() {
+// Listen on client & sensor ports
+var server = app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+var receiver = app.listen(app.get('sensor port'), function(){
+  console.log('Listening on port %s for sensor updates' + app.get('sensor port'));
+})
+
+// Socket setup
+var clientSocket = socket(server);
+var sensorReceiver = socket(receiver);
+
+// Callbacks 
+function registerSensorSocket(socketId, data) {
+  var sensorTimeout = 10000; // in ms
+
+  // sensorName, sensorPassword, sensorLevel, sensorRoom, sensorTimeout, socketId
+  sensorManager.registerSensor(socketId, data.name, data.password, data.level, data.room, sensorTimeout);
+}
+
+function unregisterSensorSocket(socketId) {
+  sensorManager.unregisterSensor(socketId)
+}
+
+// A callback that gets called when a sensor updates the server with some of its information
+function receiveSensorInformation(socketId, connectedClients, packet) {
+    for (var clientID in connectedClients) {
+        connectedClients[clientID].emit("update", packet);
+    }
+}
+
+// Setup the networking module
+networking.networkingSetup(clientSocket, sensorReceiver, receiveSensorInformation, registerSensorSocket, unregisterSensorSocket);
 
 module.exports = app;
