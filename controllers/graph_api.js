@@ -1,15 +1,5 @@
 var reltime = require("reltime");
 
-function initAPI(expressApp) {
-    expressApp.get("/api/query", function (req, res) {
-        res.send(processQuery(req.query));
-        // res.render('loading');
-    });
-    expressApp.get("/api/realtime", function (req, res) {
-        res.send(processRealtime(req.query));
-    });
-}
-
 function parseDate(dateStr) {
     if (dateStr[0].toLowerCase() == "r") {
         return reltime.parse(new Date(), dateStr.substring(1));
@@ -27,7 +17,9 @@ function parseDate(dateStr) {
 //   Returns a dictionary containing an entry for each room.
 //   Each room contains a list of dictionaries, where the dictionarys contain
 //     the a timestamp, and a dictionary of metrics.
-function processQuery(query) {
+exports.doQueryGet = function(req, res) {
+    var query = req.query;
+
     var rooms = query.rooms.split(",");
     var metrics = query.metrics.split(",");
     var from = parseDate(query.from);
@@ -51,7 +43,7 @@ function processQuery(query) {
         }
     }
 
-    return result;
+    res.send(result)
 }
 
 // Parameters:
@@ -60,7 +52,9 @@ function processQuery(query) {
 // Return format:
 //   Returns a dictionary containing an entry for each room.
 //   Each room's entry contains a dictionary containing the metrics names as keys and metric values as values.
-function processRealtime(query) {
+exports.doRealtimeGet = function(req, res) {
+    var query = req.query;
+
     var rooms = query.rooms.split(",");
     var metrics = query.metrics.split(",");
 
@@ -74,9 +68,5 @@ function processRealtime(query) {
         result[room] = roomMetrics;
     }
 
-    return result;
-}
-
-module.exports = {
-    "initAPI": initAPI
+    res.send(result);
 }

@@ -17,6 +17,7 @@ var less = require('less-middleware');
 var webpack = require('webpack');
 var config = require('./webpack.config');
 var socket = require('socket.io');
+var graphApi = require('./controllers/graph_api');
 
 // Apparently the progress will not automatically terminate on SIGINT
 process.on('SIGINT', function() {
@@ -44,9 +45,6 @@ var configureStore = require('./app/store/configureStore').default;
 // Sensoring things
 var networking = require("./sensoring_modules/networking.js");
 var sensorManager = require("./sensoring_modules/sensor_manager.js");
-
-// API
-var api = require("./api/api.js");
 
 var app = express();
 
@@ -105,9 +103,8 @@ app.post('/reset/:token', userController.resetPost);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
 app.post('/auth/google', userController.authGoogle);
 app.get('/auth/google/callback', userController.authGoogleCallback);
-
-// API
-api.initAPI(app);
+app.get("/api/query", graphApi.doQueryGet);
+app.get("/api/realtime", graphApi.doRealtimeGet);
 
 // React server rendering
 app.use(function(req, res) {
