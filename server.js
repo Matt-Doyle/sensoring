@@ -40,6 +40,9 @@ var contactController = require('./controllers/contact');
 var routes = require('./app/routes');
 var configureStore = require('./app/store/configureStore').default;
 
+// API
+var api = require("./api/api.js");
+
 var app = express();
 
 var compiler = webpack(config);
@@ -96,6 +99,9 @@ app.post('/reset/:token', userController.resetPost);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
 app.post('/auth/google', userController.authGoogle);
 app.get('/auth/google/callback', userController.authGoogleCallback);
+
+// API
+api.initAPI(app);
 
 // React server rendering
 app.use(function(req, res) {

@@ -44,6 +44,7 @@
     "redux-logger": "^2.6.1",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.0.1",
+    "reltime": "^0.0.2",
     "request": "^2.69.0",
     "sprintf-js": "^1.1.1",
     "webpack": "^1.12.14",
