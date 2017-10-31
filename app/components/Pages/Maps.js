@@ -1,6 +1,7 @@
 import React from 'react';
 import MapComponent from '../MapComponent';
 import {connect} from 'react-redux';
+import {setGraphMetrics, setGraphTimescale} from '../../actions/get_data';
 
 var mapTitlePadding = {
   marginTop: '2em'
@@ -31,7 +32,6 @@ class Maps extends React.Component {
     var activatedMetrics = this.state.activatedMetrics;
     activatedMetrics[metric] = !activatedMetrics[metric];
 
-    console.log(this.state);
     this.setState(Object.assign({}, this.state, {activatedMetrics: activatedMetrics}))
 
     var metrics = [];
@@ -40,11 +40,15 @@ class Maps extends React.Component {
       metrics.push(k);
     }
 
-    this.props.dispatch({type: 'GRAPH_METRICS_UPDATED', metrics: metrics})
+    this.props.dispatch(setGraphMetrics(this.props.graph, metrics));
   }
 
-  handleTimescaleClick() {
+  handleTimescaleClick(timescale) {
+    this.props.dispatch(setGraphTimescale(this.props.graph, timescale));
+  }
 
+  getMetricClass(metric) {
+    return "btn btn-" + (this.state.activatedMetrics[metric] ? "success" : "danger") + " graphMetricBtn";
   }
 
   render() {
@@ -69,15 +73,15 @@ class Maps extends React.Component {
               <div className="panel-body">
                 <h3>Real-time Graphs</h3>
                 <h5>Choose Graph Metric</h5>
-                <button className={"btn btn-" + (this.state.activatedMetrics["temperature"] ? "success" : "danger") + " graphMetricBtn"} onClick={() => { this.handleMetricClick("temperature") }}>Temperature</button>
-                <button className={"btn btn-" + (this.state.activatedMetrics["humidity"] ? "success" : "danger") + " graphMetricBtn"} onClick={() => { this.handleMetricClick("humidity") }}>Humidity</button>
-                <button className={"btn btn-" + (this.state.activatedMetrics["lightIntensity"] ? "success" : "danger") + " graphMetricBtn"} onClick={() => { this.handleMetricClick("lightIntensity") }}>Light Intensity</button>
-                <button className={"btn btn-" + (this.state.activatedMetrics["soundIntensity"] ? "success" : "danger") + " graphMetricBtn"} onClick={() => { this.handleMetricClick("soundIntensity") }}>Sound Intensity</button>
+                <button className={this.getMetricClass("temperature")} onClick={() => { this.handleMetricClick("temperature") }}>Temperature</button>
+                <button className={this.getMetricClass("humidity")} onClick={() => { this.handleMetricClick("humidity") }}>Humidity</button>
+                <button className={this.getMetricClass("lightIntensity")} onClick={() => { this.handleMetricClick("lightIntensity") }}>Light Intensity</button>
+                <button className={this.getMetricClass("soundIntensity")} onClick={() => { this.handleMetricClick("soundIntensity") }}>Sound Intensity</button>
                 <h6>Timescale</h6>
-                <button className="btn btn-outline-secondary btn-sm graphMetricBtn">Year</button>
-                <button className="btn btn-outline-secondary btn-sm graphMetricBtn">Month</button>
-                <button className="btn btn-outline-secondary btn-sm graphMetricBtn">Week</button>
-                <button className="btn btn-outline-secondary btn-sm graphMetricBtn">Day</button>
+                <button className="btn btn-outline-secondary btn-sm graphMetricBtn" onClick={()=>{this.handleTimescaleClick("r-365d")}}>Year</button>
+                <button className="btn btn-outline-secondary btn-sm graphMetricBtn" onClick={()=>{this.handleTimescaleClick("r-30d")}}>Month</button>
+                <button className="btn btn-outline-secondary btn-sm graphMetricBtn" onClick={()=>{this.handleTimescaleClick("r-1w")}}>Week</button>
+                <button className="btn btn-outline-secondary btn-sm graphMetricBtn" onClick={()=>{this.handleTimescaleClick("r-1d")}}>Day</button>
               </div>
             </div>
           </div>

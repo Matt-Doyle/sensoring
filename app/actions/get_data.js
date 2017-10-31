@@ -4,9 +4,7 @@ export function getGraphData(level, rooms, metrics, from) {
     return (dispatch) => {
         var queryString = "/api/query?rooms=%s%s&metrics=" + metrics.join(",") + "&from=%s&to=rnow";
         
-        queryString = vsprintf(queryString, [level, rooms, from]);
-
-        console.log(queryString);
+        queryString = vsprintf(queryString, [level, rooms[0], from]);
 
         return fetch(queryString,
         {
@@ -14,7 +12,6 @@ export function getGraphData(level, rooms, metrics, from) {
             mode: 'cors',
             cache: 'default'
         }).then((response)=>{
-            console.log(response)
             if (response.ok) {
                 return response.json().then((json)=>{
                     dispatch({
@@ -27,29 +24,62 @@ export function getGraphData(level, rooms, metrics, from) {
     }
 };
 
-export function setGraphLevel(level) {
+export function setGraphPosition(graph, level, rooms) {
     return (dispatch) => {
         dispatch({
             type: 'GRAPH_LEVEL_UPDATED',
-            graphLevel: level
+            level: level
         })
+
+        dispatch({
+            type: 'GRAPH_ROOM_UPDATED',
+            rooms: rooms
+        })
+
+        dispatch(getGraphData(level, rooms, graph.metrics, graph.timescale));
     }
 }
 
-export function setGraphRooms(rooms) {
+export function setGraphLevel(graph, level) {
     return (dispatch) => {
         dispatch({
-            type: 'GRAPH_TIMESCALE_UPDATED',
-            graphRooms: rooms
+            type: 'GRAPH_LEVEL_UPDATED',
+            level: level
         })
+
+        dispatch(getGraphData(level, graph.rooms, graph.metrics, graph.timescale));
     }
 }
 
-export function setGraphTimescale(timescale) {
+export function setGraphRooms(graph, rooms) {
+    return (dispatch) => {
+        dispatch({
+            type: 'GRAPH_ROOM_UPDATED',
+            rooms: rooms
+        })
+
+        dispatch(getGraphData(graph.level, rooms, graph.metrics, graph.timescale));
+    }
+}
+
+export function setGraphTimescale(graph, timescale) {
     return (dispatch) => {
         dispatch({
             type: 'GRAPH_TIMESCALE_UPDATED',
-            graphTimescale: timescale
+            timescale: timescale
         })
+
+        dispatch(getGraphData(graph.level, graph.rooms, graph.metrics, timescale));
+    }
+}
+
+export function setGraphMetrics(graph, metrics) {
+    return (dispatch) => {
+        dispatch({
+            type: 'GRAPH_METRICS_UPDATED',
+            metrics: metrics
+        })
+
+        dispatch(getGraphData(graph.level, graph.rooms, metrics, graph.timescale));
     }
 }

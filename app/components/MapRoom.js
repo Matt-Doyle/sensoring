@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {getGraphData} from '../actions/get_data';
+import {setGraphPosition} from '../actions/get_data';
 
 
 class MapRoom extends React.Component {
     handleClick() {
-        this.props.dispatch(getGraphData(this.props.level, this.props.rooms, this.props.metrics, this.props.timescale));
+        this.props.dispatch(setGraphPosition(this.props.graph, this.props.level, this.props.rooms));
     }
 
     render() {
@@ -31,8 +31,7 @@ class MapRoom extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     return Object.assign({}, ownProps, {
-        timescale: state.graph.timescale,
-        metrics: state.graph.metrics
+        graph: state.graph
     });
 }
 

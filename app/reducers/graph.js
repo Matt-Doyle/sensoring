@@ -1,3 +1,5 @@
+import {getGraphData} from '../actions/get_data';
+
 export default function graph(state = {}, action) {
     switch (action.type) {
         case 'GRAPH_DATA_UPDATED':
@@ -9,7 +11,7 @@ export default function graph(state = {}, action) {
             return Object.assign({}, state, {
                 rooms: action.rooms
             });
-        break;
+            break;
         case 'GRAPH_TIMESCALE_UPDATED':
             return Object.assign({}, state, {
                 timescale: action.timescale
