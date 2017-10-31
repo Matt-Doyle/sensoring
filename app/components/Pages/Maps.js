@@ -36,7 +36,7 @@ class Maps extends React.Component {
 
     var metrics = [];
 
-    for (k in this.activatedMetrics) {
+    for (var k in activatedMetrics) {
       metrics.push(k);
     }
 
