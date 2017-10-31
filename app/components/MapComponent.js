@@ -14,7 +14,7 @@ class MapComponent extends React.Component {
                 floorMap = (
                     <div className="mapLayout">
                         <div className="mapUpper">
-                            <MapRoom rooms={["B3", "B4"]} level={level} onClick={() => {console.log("ran")}}></MapRoom>
+                            <MapRoom rooms={["B3", "B4"]} level={level}></MapRoom>
                             <MapRoom rooms={["L1", "L2"]} level={level}></MapRoom>
                             <MapRoom rooms={["L3"]} level={level}></MapRoom>
                             <MapRoom rooms={["L4", "L5"]} level={level}></MapRoom>

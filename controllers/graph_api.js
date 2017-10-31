@@ -25,8 +25,11 @@ exports.doQueryGet = function(req, res) {
     var from = parseDate(query.from);
     var to = parseDate(query.to) || new Date();
 
+    console.log(query.from, query.to);
+    console.log(rooms, metrics, from, to);
+    console.log(from < to);
+
     var result = {};
-    console.log(from);
     for (var room of rooms) {
         result[room] = [];
         var timeIter = from;
@@ -43,7 +46,9 @@ exports.doQueryGet = function(req, res) {
         }
     }
 
-    res.send(result)
+    console.log(result);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(result));
 }
 
 // Parameters:
@@ -68,5 +73,6 @@ exports.doRealtimeGet = function(req, res) {
         result[room] = roomMetrics;
     }
 
-    res.send(result);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(result));
 }

@@ -110,7 +110,8 @@ app.get("/api/realtime", graphApi.doRealtimeGet);
 app.use(function(req, res) {
   var initialState = {
     auth: { token: req.cookies.token, user: req.user },
-    messages: {}
+    messages: {},
+    graph: {data: [], rooms: ["B1"], level: 1, metrics: ["temperature"], timescale: "r-100s"}
   };
 
   var store = configureStore(initialState);
