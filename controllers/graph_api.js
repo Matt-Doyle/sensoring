@@ -25,10 +25,6 @@ exports.doQueryGet = function(req, res) {
     var from = parseDate(query.from);
     var to = parseDate(query.to) || new Date();
 
-    console.log(query.from, query.to);
-    console.log(rooms, metrics, from, to);
-    console.log(from < to);
-
     var result = {};
     for (var room of rooms) {
         result[room] = [];
@@ -39,14 +35,13 @@ exports.doQueryGet = function(req, res) {
                 roomMetrics[metric] = Math.round(Math.random() * 50 - 25);
             }
             result[room].push({
-                 "timestamp": from,
+                 "timestamp": timeIter.getTime(),
                  "metrics": roomMetrics
             });
             timeIter = reltime.parse(timeIter, "10m");
         }
     }
 
-    console.log(result);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(result));
 }

@@ -39,7 +39,7 @@ class Maps extends React.Component {
     for (var k in activatedMetrics) {
       metrics.push(k);
     }
-
+    
     this.props.dispatch(setGraphMetrics(this.props.graph, metrics));
   }
 
