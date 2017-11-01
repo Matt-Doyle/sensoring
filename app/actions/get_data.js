@@ -2,7 +2,6 @@ var vsprintf = require("sprintf-js").vsprintf;
 
 export function getGraphData(level, rooms, metrics, from) {
     return (dispatch) => {
-        console.log(metrics)
         var queryString = "/api/query?rooms=%s%s&metrics=" + metrics.join(",") + "&from=%s&to=rnow";
         
         queryString = vsprintf(queryString, [level, rooms[0], from]);

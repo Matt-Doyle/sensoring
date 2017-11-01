@@ -1,5 +1,6 @@
 import React from 'react';
 import MapComponent from '../MapComponent';
+import MapGraph from '../MapGraph';
 import {connect} from 'react-redux';
 import {setGraphMetrics, setGraphTimescale} from '../../actions/get_data';
 
@@ -37,7 +38,8 @@ class Maps extends React.Component {
     var metrics = [];
 
     for (var k in activatedMetrics) {
-      metrics.push(k);
+      if (activatedMetrics[k])
+        metrics.push(k);
     }
     
     this.props.dispatch(setGraphMetrics(this.props.graph, metrics));
@@ -77,6 +79,7 @@ class Maps extends React.Component {
                 <button className={this.getMetricClass("humidity")} onClick={() => { this.handleMetricClick("humidity") }}>Humidity</button>
                 <button className={this.getMetricClass("lightIntensity")} onClick={() => { this.handleMetricClick("lightIntensity") }}>Light Intensity</button>
                 <button className={this.getMetricClass("soundIntensity")} onClick={() => { this.handleMetricClick("soundIntensity") }}>Sound Intensity</button>
+                <MapGraph/>
                 <h6>Timescale</h6>
                 <button className="btn btn-outline-secondary btn-sm graphMetricBtn" onClick={()=>{this.handleTimescaleClick("r-365d")}}>Year</button>
                 <button className="btn btn-outline-secondary btn-sm graphMetricBtn" onClick={()=>{this.handleTimescaleClick("r-30d")}}>Month</button>
