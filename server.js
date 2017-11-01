@@ -111,7 +111,7 @@ app.use(function(req, res) {
   var initialState = {
     auth: { token: req.cookies.token, user: req.user },
     messages: {},
-    graph: {data: [], rooms: ["B1"], level: 1, metrics: ["temperature"], timescale: "r-100s"}
+    graph: {data: [], rooms: ["B1"], level: 1, metrics: [], timescale: "r-100s"}
   };
 
   var store = configureStore(initialState);

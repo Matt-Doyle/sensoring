@@ -83,7 +83,7 @@ class Maps extends React.Component {
                 <h6>Timescale</h6>
                 <button className="btn btn-outline-secondary btn-sm graphMetricBtn" onClick={()=>{this.handleTimescaleClick("r-365d")}}>Year</button>
                 <button className="btn btn-outline-secondary btn-sm graphMetricBtn" onClick={()=>{this.handleTimescaleClick("r-30d")}}>Month</button>
-                <button className="btn btn-outline-secondary btn-sm graphMetricBtn" onClick={()=>{this.handleTimescaleClick("r-1w")}}>Week</button>
+                <button className="btn btn-outline-secondary btn-sm graphMetricBtn" onClick={()=>{this.handleTimescaleClick("r-7d")}}>Week</button>
                 <button className="btn btn-outline-secondary btn-sm graphMetricBtn" onClick={()=>{this.handleTimescaleClick("r-1d")}}>Day</button>
               </div>
             </div>

@@ -32,6 +32,7 @@ class MapGraph extends React.Component {
         var metricList = props.graph.metrics;
         // When does the graph begin?
         var begginingTime = dataset[0].timestamp;
+        var endingTime = dataset[dataset.length - 1].timestamp;
 
         // Nicely formatted data that can be read by ChartJS
         // Metrics are keys which correspond to arrays of timestamps and datapoints
@@ -53,15 +54,17 @@ class MapGraph extends React.Component {
 
                 var currentMetric = metricList[metric];
 
-                formattedDataset[currentMetric].push({x: (dataset[datapoint].timestamp - begginingTime) / 1000, y: dataset[datapoint].metrics[currentMetric]});
+                formattedDataset[currentMetric].push({x: (dataset[datapoint].timestamp - begginingTime) / (endingTime - begginingTime), y : dataset[datapoint].metrics[currentMetric]});
             }
         }
+
+        console.log(formattedDataset)
 
         var charts = {};
 
         for (var k in formattedDataset) {
             var newChart = {
-                type: 'line',
+                type: 'scatter',
                 data: {
                     datasets: [{
                         label: k,
@@ -72,7 +75,35 @@ class MapGraph extends React.Component {
                     }]
                 },
                 options: {
-
+                    responsive: true,
+                    title:{
+                        display:true,
+                        text:'Chart.js Line Chart'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Time (s)'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Metric'
+                            }
+                        }]
+                    }
                 }
             };
 
@@ -87,16 +118,21 @@ class MapGraph extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log("this ran")
         if (typeof window !== 'undefined') {
-            var charts = [];
+            var charts = {};
 
             for (var k in this.canvases) {
+                if (charts[k]) { delete charts[k] }
                 if (!this.canvases[k])
                     continue;
+                
                 var ctx = this.canvases[k].getContext('2d');
                 var temp = new Chart(ctx, this.state.chartData[k])
+
+                charts[k] = temp;
             }
+
+            //this.setState({chartData: this.state.chartData, charts: charts})
         }
     }
 
@@ -105,7 +141,7 @@ class MapGraph extends React.Component {
         this.canvases = {};
 
         for (var k in this.state.chartData) {
-            canvasElements.push((<canvas ref={(canvas)=>{this.canvases[k] = canvas; console.log("updating ref", k)}} key={k}></canvas>));
+            canvasElements.push((<canvas ref={(canvas)=>{this.canvases[k] = canvas}} key={k}></canvas>));
         }
 
         return (
