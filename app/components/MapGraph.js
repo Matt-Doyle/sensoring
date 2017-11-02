@@ -1,10 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
-var Chart;
-
-if (typeof window !== 'undefined')
-    Chart = require('chart.js').Chart;
+import ChartComponent from './ChartComponent';
 
 // Patrick, all the datapoints are in the variable 'this.props.graph.data' and they are stored in a dictionary
 // See if you can get your graph working with this.
@@ -58,8 +54,6 @@ class MapGraph extends React.Component {
             }
         }
 
-        console.log(formattedDataset)
-
         var charts = {};
 
         for (var k in formattedDataset) {
@@ -103,7 +97,17 @@ class MapGraph extends React.Component {
                                 labelString: 'Metric'
                             }
                         }]
-                    }
+                    },
+                    animation: {
+                        duration: 0,
+                    },
+                    hover: {
+                        animationDuration: 0,
+                    },
+                    responsiveAnimationDuration: 0,
+                    tooltips: {
+                        enabled: false
+                   }
                 }
             };
 
@@ -117,31 +121,11 @@ class MapGraph extends React.Component {
         this.generateCharts(nextProps);
     }
 
-    componentDidUpdate() {
-        if (typeof window !== 'undefined') {
-            var charts = {};
-
-            for (var k in this.canvases) {
-                if (charts[k]) { delete charts[k] }
-                if (!this.canvases[k])
-                    continue;
-                
-                var ctx = this.canvases[k].getContext('2d');
-                var temp = new Chart(ctx, this.state.chartData[k])
-
-                charts[k] = temp;
-            }
-
-            //this.setState({chartData: this.state.chartData, charts: charts})
-        }
-    }
-
     render() {
         var canvasElements = [];
-        this.canvases = {};
 
         for (var k in this.state.chartData) {
-            canvasElements.push((<canvas ref={(canvas)=>{this.canvases[k] = canvas}} key={k}></canvas>));
+            canvasElements.push((<ChartComponent chartData={this.state.chartData[k]} key={k}/>));
         }
 
         return (
